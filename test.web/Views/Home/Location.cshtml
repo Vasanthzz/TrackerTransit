@@ -1,0 +1,122 @@
+﻿
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Live Location</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+<body>
+    <h1>Your Live Location</h1>
+    <div id="map" style="width: 100%; height: 500px;"></div>
+    <span id="latitude"></span>
+    <span id="longitude"></span>
+    <!-- Include Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script>
+        // Function to handle geolocation success
+        function showPosition(position) {
+            var latitude = 51.505;
+            var longitude = -0.09;
+            var userName = "John Doe";
+            // Update the HTML elements with the latitude and longitude
+            document.getElementById("latitude").textContent = latitude;
+            document.getElementById("longitude").textContent = longitude;
+        }
+
+        // Function to handle geolocation error
+        function showError(error) {
+            var errorMessage = "An error occurred while retrieving your location.";
+
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    errorMessage = "Permission to access location was denied by the user.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    errorMessage = "Location information is unavailable.";
+                    break;
+                case error.TIMEOUT:
+                    errorMessage = "The request to get location timed out.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    errorMessage = "An unknown error occurred.";
+                    break;
+            }
+
+            // Display the error message
+            alert(errorMessage);
+        }
+
+        // Check if geolocation is supported by the browser
+        if ("geolocation" in navigator) {
+            // Get the current location as soon as the page loads
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+        } else {
+            alert("Geolocation is not supported by this browser.");
+        }
+
+        // Initialize Leaflet map
+        var map = L.map('map').setView([0, 0], 15);
+
+        // Add a tile layer (you can use different tile providers)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Function to get and display the live location on the map
+        function getLiveLocation() {
+            // Check if geolocation is supported by the browser
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(function (position, username) {
+                    var latitude = position.coords.latitude;
+                    var longitude = position.coords.longitude;
+
+                    // Update the map view to the live location
+                    map.setView([latitude, longitude], 15);
+
+                    // Add a marker at the live location
+                    L.marker([latitude, longitude]).addTo(map)
+                        .bindPopup(username).openPopup();
+                }, function (error) {
+                    // Handle geolocation errors
+                    alert("Error getting live location: " + error.message);
+                });
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+        $(document).ready(function () {
+            // Function to fetch and update location data every second
+            function updateLocation() {
+                debugger;
+                $.get('@Url.Action("GetLocation", "Home")', { latitude: latitude, longitude: longitude }, function (data) {
+                    $('#latitude').text(data.Latitude);
+                    $('#longitude').text(data.Longitude);
+                });
+            }
+
+            $(document).ready(function () {
+                getLiveLocation();
+                // Call the updateLocation function periodically (every second)
+                setInterval(function () {
+                    getLiveLocation();
+                }, 1000);
+            });
+        });
+        // Call the getLiveLocation function when the page loads
+        getLiveLocation();
+        function displayUserLocationOnMap(latitude, longitude, userName) {
+            var marker = L.marker([latitude, longitude]).addTo(map);
+            marker.bindPopup(userName); // Display user's name as a popup when the marker is clicked
+        }
+
+
+
+        displayUserLocationOnMap(userLatitude, userLongitude, userName);
+    </script>
+ 
+</body>
+</html>
