@@ -1,0 +1,4 @@
+#Fri Sep 22 11:18:14 IST 2023
+base.0=C\:\\Users\\vasan\\OneDrive\\Desktop\\desktop\\ui\\login_screen_ui\\build\\app\\intermediates\\dex\\debug\\mergeDexDebug\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

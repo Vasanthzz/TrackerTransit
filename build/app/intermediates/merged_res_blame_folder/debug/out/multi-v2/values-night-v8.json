@@ -1,0 +1,28 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\vasan\\OneDrive\\Desktop\\desktop\\ui\\login_screen_ui\\build\\app\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-night-v8\\values-night-v8.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\vasan\\OneDrive\\Desktop\\desktop\\ui\\login_screen_ui\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "from": {
+                        "startLines": "3,18",
+                        "startColumns": "4,4",
+                        "startOffsets": "172,1094",
+                        "endLines": "11,20",
+                        "endColumns": "12,12",
+                        "endOffsets": "747,1258"
+                    },
+                    "to": {
+                        "startLines": "2,11",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,634",
+                        "endLines": "10,13",
+                        "endColumns": "12,12",
+                        "endOffsets": "629,798"
+                    }
+                }
+            ]
+        }
+    ]
+}
